@@ -8,9 +8,11 @@ from tech import tech_news
 from business import business_news
 from entertainment import enter_news
 from sports import sports_news
+from lifestyle import lifestyle_news
+from health import health_news
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
 
+TOKEN = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='!')
 
 @bot.event
@@ -31,8 +33,6 @@ async def nine_nine(ctx):
     response = random.choice(brooklyn_99_quotes)
     await ctx.send(response)
 
-
-
 @bot.command(name='info')
 async def nine_nine(ctx):
     info = [
@@ -52,24 +52,23 @@ async def Sports(ctx):
 async def entertainment(ctx):
     news = enter_news()
     news_titles = [f"> {idx+1}. {item['title']}" for idx,item in enumerate(news) if len(item['title'])>0] 
+    
     news_content ="Entertainment News\n"+"\n".join(news_titles)
     await ctx.send(news_content[:2000])
 
 @bot.command(name='lifestyle')
 async def lifestyle(ctx):
-    life = [
-        'I provide u lifestyle news'
-    ]
-    response = random.choice(life)
-    await ctx.send(response)
+    news = lifestyle_news()
+    news_titles = [f"> {idx+1}. {item['title']}" for idx,item in enumerate(news) if len(item['title'])>0]
+    news_content ="Life Style News\n"+"\n".join(news_titles)
+    await ctx.send(news_content[:2000])
 
 @bot.command(name='health')
 async def health(ctx):
-    health = [
-        'I provide u health news'
-    ]
-    response = random.choice(health)
-    await ctx.send(response)
+    news = health_news()
+    news_titles = [f" > {idx+1}. {item['title']}" for idx,item in enumerate(news) if len(item['title'])>0]
+    news_content ="Health News\n"+"\n".join(news_titles)
+    await ctx.send(news_content[:2000])
 
 @bot.command(name='headlines')
 async def international(ctx):
@@ -79,11 +78,11 @@ async def international(ctx):
 
 @bot.command(name='tech')
 async def tech(ctx):
+    print('tech news')
     news = tech_news()
     news_titles = [f"> {idx+1}. {item['title']}" for idx,item in enumerate(news) if len(item['title'])>0]
     news_content = "Tech News\n"+"\n".join(news_titles)[:2000] 
     await ctx.send(news_content)
-
 
 @bot.command(name='business')
 async def business(ctx):
@@ -91,8 +90,6 @@ async def business(ctx):
     news_titles = [f"> {idx+1}. {item['title']}" for idx,item in enumerate(news) if len(item['title'])>0] 
     news_content ="Business News\n"+"\n".join(news_titles)
     await ctx.send(news_content[:2000])
-
-
 
 
 if __name__ == "__main__":

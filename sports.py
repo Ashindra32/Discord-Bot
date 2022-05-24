@@ -7,15 +7,20 @@ def sports_news():
     soup = BeautifulSoup(data,"html.parser")
     data = []
     target= soup.find('div',attrs={'id':'c_sport_wdt_1'})
-    for divtag in target.find('div',attrs={'class':'news-section clearfix'}):
-        try:
-            title = divtag.find('div').text
-        except:
-            title = ""
-        data.append(title)
+    newslist = target.find_all('ul',attrs={'class':'cvs_wdt'})
+    data = []
+    for news_ul in newslist:
+        for news_li in news_ul.find_all('li'):
+            try:
+                news_title = news_li.find('a').text
+                news_link = news_li.find('a').get('href')
+                if len(news_title) > 20:
+                    data.append({"title":news_title,"link":news_link})
+            except:
+                pass
     return data
 
 if __name__ =="__main__":
     data = sports_news()
-    print(data)
+    print(len(data))
 

@@ -1,18 +1,19 @@
 import requests
 from bs4 import BeautifulSoup
 def health_news():
-    url = "https://timesofindia.indiatimes.com/life-style/health-fitness"
+    url = "https://timesofindia.indiatimes.com/life-style/health-fitness/health-news"
     page_request = requests.get(url)
     data = page_request.content
     soup = BeautifulSoup(data,"html.parser")
     data = []
-    target= soup.find('div',attrs={'class':'fix_wrapper clearfix'})
-    for news in target.find_all('div',attrs={'class': 'ent_middle clearfix'}):
+    news = soup.find_all('div',attrs={'class':'md_news_box'})
+    for news_div in news:
         try:
-            title = news.find('div',attrs= {'class': 'wht_box clearfix'}).text
-        except:
-            title = ""
-        data.append(title)
+            news_title = news_div.find('p').text
+            news_link = news_div.find('p').a.get('href')
+            data.append({"title":news_title,"link":f"{url}{news_link}"})
+        except Exception as e:
+            pass
     return data
 
 if __name__ =="__main__":
