@@ -1,4 +1,3 @@
-from attr import attr
 import requests
 from bs4 import BeautifulSoup
 def lifestyle_news():

@@ -10,6 +10,7 @@ from entertainment import enter_news
 from sports import sports_news
 from lifestyle import lifestyle_news
 from health import health_news
+from science import science_news
 load_dotenv()
 
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -91,6 +92,12 @@ async def business(ctx):
     news_content ="Business News\n"+"\n".join(news_titles)
     await ctx.send(news_content[:2000])
 
+@bot.command(name='science')
+async def science(ctx):
+    news = science_news()
+    news_titles = [f"> {idx+1}. {item['title']}" for idx,item in enumerate(news) if len(item['title'])>0] 
+    news_content ="Science News\n"+"\n".join(news_titles)
+    await ctx.send(news_content[:2000])
 
 if __name__ == "__main__":
     bot.run(TOKEN)
