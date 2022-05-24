@@ -1,0 +1,19 @@
+from attr import attr
+import requests
+from bs4 import BeautifulSoup
+def life_news():
+    url = "https://timesofindia.indiatimes.com/life-style"
+    page_request = requests.get(url)
+    data = page_request.content
+    soup = BeautifulSoup(data,"html.parser")
+    data = []
+    target = soup.find('div',attrs={'class':'fix_wrapper clearfix'})
+    for life in target.find('div',attrs={'class':'vidobox_outer'}):
+        for news in life.find('div',attrs={'class':'fix_wrapper hpatch clearfix'}):\
+            data.append(news.text)
+    return data
+
+
+if __name__ =="__main__":
+    data = life_news()
+    print(data)
