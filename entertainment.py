@@ -14,6 +14,8 @@ def enter_news():
             title = ""
         try:
             link = litag.find('a').attrs.get('href')
+            if link.startswith('/'):
+                link = "https://timesofindia.indiatimes.com/etimes/etbriefs" + link
         except:
             link = ""
         data.append({

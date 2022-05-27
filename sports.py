@@ -14,6 +14,8 @@ def sports_news():
             try:
                 news_title = news_li.find('a').text
                 news_link = news_li.find('a').get('href')
+                if news_link.startswith('/'):
+                    news_link = "https://timesofindia.indiatimes.com" + news_link
                 if len(news_title) > 20:
                     data.append({"title":news_title,"link":news_link})
             except:
@@ -22,5 +24,5 @@ def sports_news():
 
 if __name__ =="__main__":
     data = sports_news()
-    print(len(data))
+    print(data)
 

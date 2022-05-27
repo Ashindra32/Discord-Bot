@@ -1,3 +1,7 @@
 discord
 python-dotenv
 beautifulsoup4
+scikit-learn
+joblib
+pandas
+numpy

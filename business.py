@@ -13,16 +13,16 @@ def business_news():
     for news in items:
         try:
             title=news.find("span").a.text
-        except:
-            title=""
-        try:
             link=news.find("span").a.attrs.get('href')
+            if link.startswith('/'):
+                link = "https://timesofindia.indiatimes.com"+link
+            data.append({
+                'title':title,
+                'link':link,
+            })
         except:
-            link = "#"
-        data.append({
-            'title':title,
-            'link':link,
-        })
+            pass    
+
     return data
 
 if __name__ == "__main__":

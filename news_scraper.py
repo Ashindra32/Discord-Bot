@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-def timesofindia():
+def headlines():
     url = "https://timesofindia.indiatimes.com/home/headlines"
     page_request = requests.get(url)
     data = page_request.content
@@ -13,7 +13,7 @@ def timesofindia():
                 for litag in ultag.find_all('li'):
                     counter = counter + 1
                     link = "https://timesofindia.indiatimes.com" + litag.find('a')['href']
-                    title = litag.find('a').text
+                    title = litag.find('span',attrs={'class':'w_tle'}).text
                     # time = litag.find('span',attrs={'class':'w_bylinec'}).text
                     data.append({
                         'title':title,
@@ -24,7 +24,7 @@ def timesofindia():
                     
 
 if __name__ == "__main__":
-    out = timesofindia()
+    out = headlines()
     for row in out:
         print(row)
         print()

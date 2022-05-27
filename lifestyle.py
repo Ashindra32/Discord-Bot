@@ -13,7 +13,7 @@ def lifestyle_news():
     data = []
     for article in articles:
         try:
-            news_title = article.find('h2').text
+            news_title = article.find('h2').text.strip('\n\r')
             news_link = article.find('h2').a.get('href')
             data.append({"title":news_title,"link":f"{news_link}"})
         except Exception as e:

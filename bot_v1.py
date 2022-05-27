@@ -12,7 +12,7 @@ from lifestyle import lifestyle_news
 from health import health_news
 from science import science_news
 from discord import Client
-from main import *
+from smalltalk import *
 import discord
 
 load_dotenv()

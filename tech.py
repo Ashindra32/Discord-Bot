@@ -8,11 +8,13 @@ def tech_news():
     data = []
     target = soup.find('div',attrs={'class':'tech_list ctn_stories'})
     for news in target.find('ul').find_all('li'):
-        title = news.find('span',{'class': 'w_tle'}).text 
-        info = news.find('span',{'class': 'w_desc'}).text
+        title = news.find('span',{'class': 'w_tle'}).text
+        link = news.find('span',{'class': 'w_tle'}).find('a').get('href') 
+        if 'https://www.gadgetsnow.com/tech-news' not in link:
+            link = 'https://www.gadgetsnow.com/tech-news'+link
         data.append({
             'title':title,
-            'description': info,
+            'link':link
         })
     return data
   
