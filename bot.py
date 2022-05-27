@@ -19,46 +19,45 @@ load_dotenv()
 
 TOKEN = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='!')
+client = discord.Client()
 
 
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
 
-@bot.event
-async def on_ready():
-    print(f'{bot.user.name} has connected to Discord!')
 
-@bot.event
-async def on_member_join(member):
-    await member.create_dm()
-    await member.dm_channel.send(
-        f'Hi {member.name}, welcome to my Discord server!'
-    )
-
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
+async def on_message(ctx):
+    if ctx.author.bot:
         return
-    if message.content:
-        response = predict(message.content)
-        await message.channel.send(response)
-    elif message.content == 'raise-exception':
-        raise discord.DiscordException
+    elif ctx.content.startswith('!help'):
+        await ctx.send('!hello - Hello!\n!news - News\n!tech - Technology\n!business - Business\n!entertainment - Entertainment\n!sports - Sports\n!lifestyle - Lifestyle\n!health - Health\n!science - Science')
+    elif ctx.content.startswith('!news'):
+        await ctx.send('Choose from the following categories: \n!tech\n!business\n!entertainment\n!sports\n!lifestyle\n!health\n!science')
+    elif ctx.content.startswith('!tech'):
+        await ctx.send(tech_news())
+    elif ctx.content.startswith('!business'):
+        await ctx.send(business_news())
+    elif ctx.content.startswith('!entertainment'):
+        await ctx.send(enter_news())
+    elif ctx.content.startswith('!sports'):
+        await ctx.send(sports_news())
+    elif ctx.content.startswith('!lifestyle'):
+        await ctx.send(lifestyle_news())
+    elif ctx.content.startswith('!health'):
+        await ctx.send(health_news())
+    elif ctx.content.startswith('!science'):
+        await ctx.send(science_news())
+    elif ctx.content.startswith('!headlines'):
+        await ctx.send(timesofindia())
+    elif len(ctx.content) > 10:
+        print(ctx.content)
+        out = predict(ctx.content)
+        await ctx.send(out)
+    else:
+        await ctx.send('Please enter a valid command or message') 
+    
 
-@bot.command(name='99')
-async def nine_nine(ctx):
-    brooklyn_99_quotes = [
-        'I\'m the human form of the 💯 emoji.',
-        'Bingpot!',
-        (
-            'Cool. Cool cool cool cool cool cool cool, '
-            'no doubt no doubt no doubt no doubt.'
-        )
-    ]
-
-    response = random.choice(brooklyn_99_quotes)
-    await ctx.send(response)
 
 @bot.command(name='info')
 async def nine_nine(ctx):
@@ -124,23 +123,6 @@ async def science(ctx):
     news_titles = [f"> {idx+1}. {item['title']}" for idx,item in enumerate(news) if len(item['title'])>0] 
     news_content ="Science News\n"+"\n".join(news_titles)
     await ctx.send(news_content[:2000])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":

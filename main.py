@@ -36,5 +36,3 @@ def predict(query):
     # return json.dumps({'botreply':response, 'query' : query})
     return response
 
-if __name__ == '__main__':
-    print(predict('What is your name'))
