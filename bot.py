@@ -11,14 +11,40 @@ from sports import sports_news
 from lifestyle import lifestyle_news
 from health import health_news
 from science import science_news
+from discord import Client
+from main import *
+import discord
+
 load_dotenv()
 
 TOKEN = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='!')
 
+
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
+
+@bot.event
+async def on_ready():
+    print(f'{bot.user.name} has connected to Discord!')
+
+@bot.event
+async def on_member_join(member):
+    await member.create_dm()
+    await member.dm_channel.send(
+        f'Hi {member.name}, welcome to my Discord server!'
+    )
+
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    if message.content:
+        response = predict(message.content)
+        await message.channel.send(response)
+    elif message.content == 'raise-exception':
+        raise discord.DiscordException
 
 @bot.command(name='99')
 async def nine_nine(ctx):
@@ -98,6 +124,24 @@ async def science(ctx):
     news_titles = [f"> {idx+1}. {item['title']}" for idx,item in enumerate(news) if len(item['title'])>0] 
     news_content ="Science News\n"+"\n".join(news_titles)
     await ctx.send(news_content[:2000])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     bot.run(TOKEN)

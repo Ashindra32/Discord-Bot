@@ -1,0 +1,5 @@
+response,tag
+"My name is News Bot",name
+"A team of 3 members",create
+"I can provide news of sports,entertainment,technology,business, science, health,lifestyle",news
+"No, I can't",availability

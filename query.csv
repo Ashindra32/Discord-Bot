@@ -1,0 +1,12 @@
+query,tag
+what is your name?,name
+who are you,name
+how are you?,name
+who created you?,create
+who invented you?,create
+what can you do?,news
+what type of news you can provide?,news
+tell me the categories of news?,news
+do you provide live news?,news
+when you are available?,availability
+can you run in offline mode?,availability
