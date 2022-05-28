@@ -1,9 +1,8 @@
 import os
 import random
-from urllib import response
 from discord.ext import commands
 from dotenv import load_dotenv
-from news_scraper import timesofindia
+from news_scraper import headlines
 from tech import tech_news
 from business import business_news
 from entertainment import enter_news
@@ -49,7 +48,7 @@ async def on_message(ctx):
     elif ctx.content.startswith('!science'):
         await ctx.send(science_news())
     elif ctx.content.startswith('!headlines'):
-        await ctx.send(timesofindia())
+        await ctx.send(headlines())
     elif len(ctx.content) > 10:
         print(ctx.content)
         out = predict(ctx.content)
@@ -98,7 +97,7 @@ async def health(ctx):
 
 @bot.command(name='headlines')
 async def international(ctx):
-    news = timesofindia()
+    news = headlines()
     news_titles = [f"News {idx} : {item['title']}" for idx,item in enumerate(news) if len(item['title'])>0] 
     await ctx.send("\n".join(news_titles)[:2000])
 
